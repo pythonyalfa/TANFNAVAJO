@@ -148,9 +148,79 @@ class householdMem(models.Model):
         ('PT', 'Part Time'),
     ]
     Full_or_Part_Time = models.CharField(choices=status)
-    Child_Support_Payments = models.CharField(choices=choices)
+    caliprice = [
+        ('yes', 'yes'),
+        ('no', 'no'),
+        ('pending','pending'),
+    ]
+    Child_Support_Payments = models.CharField(choices=caliprice)
+    #if choices == 'yes' or choices == 'pending':
+     #   Recipient = models.TextField()
+    #else:
+     #   pass I tried adding a
+
     SSB_Retirement_Survivors_Disability = models.CharField(choices=choices)
     Retirement_Federal_State_Tribal_RR = models.CharField(choices=choices)
     Royalty_Payments = models.CharField(help_text='oil/gas/etc', choices=choices)
-    Rental_Lease_of_Property = models.CharField(c)
+    Rental_Lease_of_Property = models.BooleanField(choices=caliprice)
+    Capita = models.BooleanField(choices=caliprice, verbose_name='Per capita payments')
+    Unemployment = models.CharField(choices=caliprice, verbose_name='Unemployment Insurance Comp')
+    Vacation = models.BooleanField(choices=caliprice, verbose_name='Vacation/Sick/Severance Payments')
+    Lottery = models.BooleanField(choices=caliprice, verbose_name='Lottery/Gambling Winnings')
+    Insurance = models.CharField(choices=caliprice, verbose_name='Insurance/Settlement')
+    Workers_Comp = models.CharField(choices=caliprice, verbose_name='Workers Compensation')
+    Disability = models.CharField(choices=caliprice, verbose_name='Disablity Payments')
+    Other = models.TextField(choices=caliprice)
+    self_employed = models.CharField(choices=choices, verbose_name='Are you or anyone in your household currently self-employed?')
+    type_of_employment = models.CharField(verbose_name='Type of Employement/Business Name')
+    How_long = models.IntegerField()
+    Hours_per_work = models.IntegerField()
+    Monthly_Gross_Income = models.IntegerField()
+    Monthly_Businesses_Expenses = models.IntegerField()
+    Anyone_else_employed =  models.CharField(choices=choices, verbose_name='Is anyone in your household currently employed by others')
+    Name = models.CharField(max_length=25, default='Name')
+    Employers_address = models.CharField(max_length=50)
+    Dates_of_Employement = models.DateField()
+    Hours_per_week = models.IntegerField(max_length=2)
+    Monthly_Gross_Income = models.IntegerField()
+    Checking_Account = models.CharField(max_length=3, choices=choices)
+    Savings_Account = models.CharField(max_length=3, choices=choices)
+    Snap_Benefits = models.CharField(max_length=3, choices=choices, verbose_name='Does anyone in your household receive SNAP (food stamps)?')
+    Subsidized_Housing = models.CharField(max_length=3, choices=choices, verbose_name='Are you receiving housing assistance(subsidized)?')
+    Child_Care = models.CharField(max_length=3, choices=choices, verbose_name='Are you receiving child care assistance(subsidized)?')
+    medical_benefits = [
+        ('Medicaid', 'Medicaid'),
+        ('Medicare', 'Medicare'),
+        ('AZ AHCCCS', 'AZ AHCCCS'),
+        ('Other Medical Coverage', 'Other Medical Coverage'),
+    ]
+    benefits = models.CharField(max_length=20, verbose_name='Does anyone in your household have: ', choices=medical_benefits)
+    states = [
+        ('AZ', 'Arizona'),
+        ('UT', 'Utah'),
+        ('NM', 'New Mexico')
+    ]
+    If_yes = models.CharField(max_length=2, verbose_name='If yes, from which state?', choices=states)
+class acknowledgement(models.Model):
+    choices = [
+        ('yes', 'yes'),
+        ('no', 'no'),
+    ]
+    Customer_responsibility = models.CharField(verbose_name='I understand and acknowledge I am responsible for providing complete and accurate information, reporting all the changes that may affect my eligibility for DSR assistance within five (5) business days after the change occurs, and cooperating with DSR staff, including, if necessary, investigations.', choices=choices)
+    Personal_Responsibility_Plan = models.CharField(max_length=2, verbose_name='I understand I am required to develop a "Personal Responsibility Plan" (PRP) within thirty (30) days after approval for DSR assistance, comply with the provisions outlined in my PRP, and review my PRP with my assigned DSR staff at least once every 4 (4) months.', choices=choices)
+    Work_Participation_Hours_Requirements = models.CharField(max_length=2, choices=choices, verbose_name='I understand adults included in a DSR assistance benefit group are required to participate in authorized work activities for a minimum number of hours each month. I understand that, if I am required to meet WPH requirements and do not meet the minimum hours, I will be subject to penalty. The types of work activities that are countable and the minimum number of hours I must participate have been explained to me.')
+    Fair_Hearing_Rights = models.CharField(max_length=2, choices=choices, verbose_name='I understand if I do not agree with a decision made on my application or assistance case, I have a right to appeal the decision by submitting a request for Appeal Hearing within twenty(20) business days from the postmark date on the notice.')
+    Confidentiality = models.CharField(max_length=2, choices=choices, verbose_name='I understand information obtained to determine my eligibility is confidential and, in compliance with the Navajo Nation Privacy and Access to Information Act, may not be released to a third party, unless I sign a Notarized release of Information form authorizing the release the information I have provided to the third party.')
+    Release_of_Information = models.CharField(max_length=2, choices=choices, verbose_name='I authorize DSR to contact any other agency to obtain information necessary to determine my benfit groups eligibility for DSR assistance/benefits. I also authorize DSR to access my information stored in the DSR database to verify information I have provided and to prevent duplication of assistance.')
+    Fraud_Penalties = models.CharField(max_length=2, choices=choices, verbose_name='I understand if I intentionally provide false information, or withold information, in order to make my benefit group eligible for DSR assistance or benefits we would otherwise be ineligible to receive, I and all members of my benefit group may be disqualified from receiving DSR assistance and benefits and required to repay any payments I was not eligible to receive. In addition, I may be subject to criminal penalties under applicable tribal, state, or federal laws.')
+    Payment_Errors = models.CharField(max_length=2, choices=choices, verbose_name='I understand a payment error will occur if I receive a montly assistance payment that is more or less than I am eligible to receive. If I receive a payment for more or less than I was eligible to receive, I will immediately report this to the DSR. I understand I will responsible for repaying the amount I was not eligible to receive.')
+    date_of_application = models.DateTimeField(auto_now_add=True, auto_created=True)
+
+
+
+
+
+
+
+
 
